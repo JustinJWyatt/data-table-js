@@ -1,2 +1,2 @@
-# data-table-js
-A lean data table built in native Javascript.
+# Datatabe.js
+This is a simple datatable API written in pure JavaScript.
