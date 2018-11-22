@@ -10,7 +10,6 @@ Element.prototype.toDataTable = function (options)
 
     if (options.ajax)
     {
-
         var request = new XMLHttpRequest();
 
         request.onreadystatechange = function() {
@@ -235,7 +234,7 @@ Element.prototype.toDataTable = function (options)
             }
         };
 
-        request.open(options.data.method, options.data.url, options.data.async || true);
+        request.open(options.ajax.method, options.ajax.url, options.ajax.async || true);
 
         request.send();
     }
