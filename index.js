@@ -10,18 +10,23 @@ Element.prototype.toDataTable = function (options)
 
     if (options.ajax)
     {
-        T.ajax({
-            method: options.ajax.method,
-            url: options.ajax.url,
-            data: options.ajax.data,
-            success: function (response)
-            {
+
+        var request = new XMLHttpRequest();
+
+        request.onreadystatechange = function() {
+
+            if (this.readyState == 4 && this.status == 404){
+                throw 'Request failed.';
+            }
+
+            if (this.readyState == 4 && this.status == 200) {
+
+                let response = JSON.parse(this.responseText);
+
                 if (!Array.isArray(response))
                 {
                     throw 'The response object must be an array.';
                 }
-
-                var tbody = document.createElement('tbody');
 
                 for (var i = 0; i < response.length; i++)
                 {
@@ -224,14 +229,15 @@ Element.prototype.toDataTable = function (options)
 
                     element.appendChild(span);
                 }
-
+                
                 element.appendChild(table);
-            },
-            error: function ()
-            {
-                throw 'Request failed.';
+
             }
-        });
+        };
+
+        request.open(options.data.method, options.data.url, options.data.async || true);
+
+        request.send();
     }
     else
     {
